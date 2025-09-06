@@ -1,1 +1,15 @@
-TEST
+# Load with optional parameters
+sudo insmod ex_softirq.ko times=5
+sudo insmod ex_tasklets.ko times=4
+sudo insmod ex_workqueue.ko burst=5 delay_ms=300
+
+# Inspect logs
+dmesg | tail -n 100
+
+# Unload (order does not matter here)
+sudo rmmod ex_workqueue
+sudo rmmod ex_tasklets
+sudo rmmod ex_softirq
+
+# Check logs again for teardown messages
+dmesg | tail -n 100
